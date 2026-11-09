@@ -23,4 +23,6 @@ npm run lint
 npm run build
 ```
 
+Figma 원본, Storybook 실행과 화면 수정 위치는 [디자인 작업 인계](docs/design-handoff.md)를 참고하세요.
+
 운영 DB, Supabase Auth, Vercel 프로젝트 설정은 [인계 문서](docs/handoff.md)를 참고하세요.
