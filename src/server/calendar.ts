@@ -1,8 +1,7 @@
 // 확정된 모임 날짜를 사용자의 카카오 톡캘린더에 추가한다.
 import { z } from 'zod';
 
-import { saveKakaoToken } from './auth/oauth';
-import { providerToken } from './auth/providers';
+import { refreshKakaoToken, saveKakaoToken } from './auth/kakao';
 import { db, transaction } from './db';
 import { ApiError } from './http';
 import { findMeeting, requireMeeting } from './meeting/repository';
@@ -60,10 +59,7 @@ export async function addCalendarEvent(
         return current.access_token;
       if (!current?.refresh_token)
         throw new ApiError(400, '카카오에 다시 로그인해 주세요.');
-      const refreshed = await providerToken('kakao', {
-        grant_type: 'refresh_token',
-        refresh_token: current.refresh_token,
-      });
+      const refreshed = await refreshKakaoToken(current.refresh_token);
       await saveKakaoToken(client, userId, refreshed);
       return refreshed.access_token;
     });

@@ -15,7 +15,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-`http://localhost:3000`에서 홈과 화면을 확인할 수 있습니다. 로그인, 모임 생성과 투표까지 확인하려면 PostgreSQL과 OAuth 설정이 필요합니다. `npm run storybook`으로 기존 컴포넌트 스토리를 볼 수 있습니다.
+`http://localhost:3000`에서 홈과 화면을 확인할 수 있습니다. 로그인, 모임 생성과 투표까지 확인하려면 PostgreSQL과 Supabase Auth 설정이 필요합니다. `npm run storybook`으로 기존 컴포넌트 스토리를 볼 수 있습니다.
 
 ```sh
 npm run typecheck
@@ -23,4 +23,4 @@ npm run lint
 npm run build
 ```
 
-운영 DB, OAuth, Vercel 프로젝트 설정은 [인계 문서](docs/handoff.md)를 참고하세요.
+운영 DB, Supabase Auth, Vercel 프로젝트 설정은 [인계 문서](docs/handoff.md)를 참고하세요.

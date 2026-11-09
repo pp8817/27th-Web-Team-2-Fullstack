@@ -8,12 +8,7 @@ import { createMeetRequestDto } from '@/entities/meeting/dto/meet.dto';
 import { voteRequestDto } from '@/entities/meeting/dto/vote.dto';
 
 import { beginOAuth, completeOAuth, socialAccounts } from './auth/oauth';
-import {
-  logout,
-  requireUser,
-  rotateSession,
-  setSessionCookies,
-} from './auth/session';
+import { logout, requireUser } from './auth/session';
 import { addCalendarEvent } from './calendar';
 import {
   ApiError,
@@ -139,16 +134,13 @@ const routes: Record<
   },
   'GET auth/oauth/google/start': (request) => beginOAuth(request, 'google'),
   'GET auth/oauth/kakao/start': (request) => beginOAuth(request, 'kakao'),
-  'GET auth/oauth/google': (request) => completeOAuth(request, 'google'),
-  'GET auth/oauth/kakao': (request) => completeOAuth(request, 'kakao'),
+  'GET auth/callback': completeOAuth,
   'GET auth/me/social-accounts': async (request) =>
-    json(await socialAccounts(await userId(request))),
-  'POST auth/refresh-cookie': async (request) => {
-    const response = json({ success: true, message: '토큰을 갱신했습니다.' });
-    setSessionCookies(request, response, await rotateSession(request));
-    return response;
+    json(await socialAccounts(request)),
+  'POST auth/logout': async (request) => {
+    await logout(request);
+    return json({ success: true });
   },
-  'POST auth/logout': (request) => logout(request, json({ success: true })),
   'POST calendar/kakao/events': async (request) => {
     const input = await body(request, calendarInput);
     return json(
